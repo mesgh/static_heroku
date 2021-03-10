@@ -1,9 +1,11 @@
 const http = require('http');
 const server = http.createServer();
-const fs = require('fs');
+const finalhandler = require('finalhandler');
+const serveStatic = require('serve-static');
+const serve = serveStatic('static', { 'index': ['static.pdf', 'info.txt', 'obrazets.pdf', 'Telnet.mp4'] });
 
 server.listen(process.env.PORT || 80);
 
 server.on('request', (req, res) => {
-  res.end('NICE!');
+  serve(req, res, finalhandler(req, res));
 });
